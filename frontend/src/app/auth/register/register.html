@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestor de Tareas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative"
+  >
+    <!-- Elementos decorativos de fondo -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200/30 rounded-full blur-3xl"
+      ></div>
+      <div
+        class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-200/30 rounded-full blur-3xl"
+      ></div>
+    </div>
+
+    <!-- Card principal -->
+    <div
+      class="w-full max-w-md relative backdrop-blur-sm bg-white/80 border-0 shadow-2xl shadow-blue-500/10 p-8 rounded-xl z-10"
+    >
+      <div class="space-y-4 text-center pb-8">
+        <div
+          class="mx-auto w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg"
+        >
+          <!-- Icono Check -->
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div class="space-y-2">
+          <h2
+            class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent"
+          >
+            Gestor de Tareas
+          </h2>
+          <p class="text-gray-600">
+            Crea tu cuenta para comenzar a organizar tus tareas
+          </p>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Alert de error general -->
+        @if(mensaje != '') {
+        <div class="border-red-200 bg-red-50 p-4 rounded-md">
+          <p class="text-red-700">{{mensaje}}</p>
+        </div>
+        }
+
+        <form class="space-y-5">
+          <!-- Campo: Nombre completo -->
+          <div class="space-y-2">
+            <label for="name" class="text-sm font-medium text-gray-700"
+              >Nombre completo</label
+            >
+            <div class="relative">
+              <svg
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M5.121 17.804A7 7 0 1116.88 6.196 7 7 0 015.12 17.804z"
+                />
+              </svg>
+              <input
+                [(ngModel)]="name"
+                name="name"
+                type="text"
+                placeholder="Tu nombre completo"
+                class="pl-10 h-12 bg-white/70 border-gray-200 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl transition-all duration-200 w-full"
+              />
+            </div>
+          </div>
+
+          <!-- Campo: Email -->
+          <div class="space-y-2">
+            <label for="email" class="text-sm font-medium text-gray-700"
+              >Correo electrónico</label
+            >
+            <div class="relative">
+              <svg
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16 12H8m8 0a4 4 0 100-8 4 4 0 000 8zm0 0a4 4 0 01-8 0"
+                />
+              </svg>
+              <input
+                [(ngModel)]="email"
+                name="email"
+                type="email"
+                placeholder="tu@ejemplo.com"
+                class="pl-10 h-12 bg-white/70 border-gray-200 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl transition-all duration-200 w-full"
+              />
+            </div>
+          </div>
+
+          <!-- Campo: Contraseña -->
+          <div class="space-y-2">
+            <label for="password" class="text-sm font-medium text-gray-700"
+              >Contraseña</label
+            >
+            <div class="relative">
+              <svg
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 17a2 2 0 100-4 2 2 0 000 4z" />
+                <path d="M6 10V6a6 6 0 1112 0v4" />
+              </svg>
+              <input
+                [(ngModel)]="password"
+                name="password"
+                type="{{typeInputPassword}}"
+                placeholder="••••••••"
+                class="pl-10 pr-10 h-12 bg-white/70 border-gray-200 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl transition-all duration-200 w-full"
+              />
+              <button
+                (click)="changeStateEye()"
+                type="button"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <!-- Eye icon -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M12 4.5c-5 0-9.27 3.11-11 7.5c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12a4.5 4.5 0 110-9a4.5 4.5 0 010 9z"
+                  />
+                  @if (showPassword) {
+                  <line x1="2" x2="22" y1="2" y2="22"></line>
+                  }
+                </svg>
+              </button>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              La contraseña debe tener al menos 8 caracteres, una mayúscula, una
+              minúscula y un número
+            </div>
+          </div>
+
+          <!-- Botón de enviar -->
+          <button
+            (click)="verifyForm()"
+            type="submit"
+            class="w-full h-12 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium rounded-xl shadow-lg shadow-blue-500/25 transition-all duration-200 transform hover:scale-[1.02] disabled:scale-100 disabled:opacity-70"
+          >
+            Crear cuenta
+          </button>
+        </form>
+
+        <!-- Link de inicio de sesión -->
+        <div class="text-center pt-4 border-t border-gray-100">
+          <p class="text-sm text-gray-600">
+            ¿Ya tienes cuenta?
+            <a
+              href="/login"
+              class="font-medium text-blue-600 hover:text-blue-700 transition-colors hover:underline"
+              >Inicia sesión</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
